@@ -131,7 +131,7 @@ func (l *Light) GetDifficulty(block Block) *big.Int {
 	blockNum := block.NumberU64()
 	if blockNum >= epochLength*2048 {
 		log.Debug(fmt.Sprintf("block number %d too high, limit is %d", blockNum, epochLength*2048))
-		return big.NewInt(0)
+		return common.Big0
 	}
 
 	cache := l.getCache(blockNum)
@@ -142,12 +142,12 @@ func (l *Light) GetDifficulty(block Block) *big.Int {
 	// Recompute the hash using the cache.
 	ok, mixDigest, result := cache.compute(uint64(dagSize), block.HashNoNonce(), block.Nonce())
 	if !ok {
-		return big.NewInt(0)
+		return common.Big0
 	}
 
 	// avoid mixdigest malleability as it's not included in a block's "hashNononce"
 	if block.MixDigest() != mixDigest {
-		return big.NewInt(0)
+		return common.Big0
 	}
 
 	return result.Big()
