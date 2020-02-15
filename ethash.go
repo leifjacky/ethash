@@ -124,6 +124,12 @@ type Light struct {
 	NumCaches int // Maximum number of caches to keep before eviction (only init, don't modify)
 }
 
+func (l *Light) GetCache(blockNum uint64) time.Duration {
+	start := time.Now()
+	l.getCache(blockNum)
+	return time.Since(start)
+}
+
 // Verify checks whether the block's nonce is valid.
 func (l *Light) GetDifficulty(block Block) *big.Int {
 	// TODO: do ethash_quick_verify before getCache in order
