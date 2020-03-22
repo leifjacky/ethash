@@ -1,4 +1,4 @@
-module github.com/ethereum/ethash
+module github.com/leifjacky/ethash
 
 go 1.13
 
